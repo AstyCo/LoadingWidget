@@ -122,14 +122,14 @@ void LoadingDialog::setDefiniteMode()
     ui->progressBar->setValue(0);
 }
 
-bool LoadingDialog::close()
-{
-    if(LoadingDialogSingleton::loadingDialog()==this)
-    {
-        LoadingDialogSingleton::clearFeatures();
-    }
-    return QDialog::close();
-}
+//bool LoadingDialog::close()
+//{
+//    if(LoadingDialogSingleton::loadingDialog()==this)
+//    {
+//        LoadingDialogSingleton::clearFeatures();
+//    }
+//    return QDialog::close();
+//}
 
 void LoadingDialog::resizeEvent(QResizeEvent *e)
 {

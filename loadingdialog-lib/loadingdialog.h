@@ -2,6 +2,9 @@
 #define LOADINGDIALOG_H
 
 #include "ui_loadingdialog.h"
+
+#include "htaskmanager.h"
+
 #include <QDialog>
 #include <QThread>
 #include <QStack>
@@ -31,15 +34,15 @@ public:
     virtual ~LoadingDialog();
 
     void setVisualWidget(LoadingDialog::VisualWidget which); ///< Выбор режима отображения: Полоса загрузки, или Спиннер
-
     void setUnlimittedMode();
     void setDefiniteMode();
+
+
 
 protected:
     void resizeEvent(QResizeEvent *);
 
 public slots:
-    bool close();
     void show();
 
     void setProcess(int proc); ///< От 0 до 100
