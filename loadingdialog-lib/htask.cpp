@@ -13,6 +13,8 @@ void HTask::setTitle(const QString &taskName)
 void HTask::init()
 {
     _canceled = false;
+    if(_pCaller)
+        _pCaller->setTask(this);
 }
 
 void HTask::run(){

@@ -5,7 +5,7 @@
 #include "runandwait.h"
 
 #include <QtConcurrentRun>
-
+#include <QFutureWatcher>
 #include <QDebug>
 
 template <typename ...> class HTaskCaller;
@@ -15,6 +15,7 @@ template <typename T, typename Class>
 class HTaskCaller<T,Class> : public AbstractHTaskCaller
 {
     QFuture<T> _future;
+    QFutureWatcher<T> _futureWatcher;
     Class * _pInstance;
     T (Class::*_pFuncRun)();
 public:
@@ -26,6 +27,15 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun);
+            _futureWatcher.setFuture(_future);
+            if(_task)
+            {
+                _futureWatcher.disconnect(_task);
+                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+            }
+            else
+                qWarning("HTaskCaller::run():: HTask is NULL");
         }
         else{
             qWarning("HTaskCaller:: Instance or Function pointer is NULL");
@@ -57,6 +67,7 @@ template <typename T, typename Class, typename Param1, typename Arg1>
 class HTaskCaller<T,Class,Param1,Arg1> : public AbstractHTaskCaller
 {
     QFuture<T> _future;
+    QFutureWatcher<T> _futureWatcher;
     Class * _pInstance;
     T (Class::*_pFuncRun)(Param1);
     Arg1 _arg1;
@@ -70,6 +81,15 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1);
+            _futureWatcher.setFuture(_future);
+            if(_task)
+            {
+                _futureWatcher.disconnect(_task);
+                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+            }
+            else
+                qWarning("HTaskCaller::run():: HTask is NULL");
         }
         else{
             qWarning("HTaskCaller:: Instance or Function pointer is NULL");
@@ -101,6 +121,7 @@ template <typename T, typename Class, typename Param1, typename Arg1, typename P
 class HTaskCaller<T,Class,Param1,Arg1,Param2,Arg2> : public AbstractHTaskCaller
 {
     QFuture<T> _future;
+    QFutureWatcher<T> _futureWatcher;
     Class * _pInstance;
     T (Class::*_pFuncRun)(Param1, Param2);
     Arg1 _arg1;
@@ -116,6 +137,15 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2);
+            if(_task)
+            {
+                _futureWatcher.disconnect(_task);
+                QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                _futureWatcher.setFuture(_future);
+            }
+            else
+                qWarning("HTaskCaller::run():: HTask is NULL");
         }
         else{
             qWarning("HTaskCaller:: Instance or Function pointer is NULL");
@@ -148,6 +178,7 @@ template <typename T, typename Class, typename Param1, typename Arg1, typename P
 class HTaskCaller<T,Class,Param1,Arg1,Param2,Arg2,Param3,Arg3> : public AbstractHTaskCaller
 {
     QFuture<T> _future;
+    QFutureWatcher<T> _futureWatcher;
     Class * _pInstance;
     T (Class::*_pFuncRun)(Param1, Param2, Param3);
     Arg1 _arg1;
@@ -166,6 +197,15 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2,_arg3);
+            _futureWatcher.setFuture(_future);
+            if(_task)
+            {
+                _futureWatcher.disconnect(_task);
+                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+            }
+            else
+                qWarning("HTaskCaller::run():: HTask is NULL");
         }
         else{
             qWarning("HTaskCaller:: Instance or Function pointer is NULL");
@@ -198,6 +238,7 @@ template <typename T, typename Class, typename Param1, typename Arg1, typename P
 class HTaskCaller<T,Class,Param1,Arg1,Param2,Arg2,Param3,Arg3,Param4,Arg4> : public AbstractHTaskCaller
 {
     QFuture<T> _future;
+    QFutureWatcher<T> _futureWatcher;
     Class * _pInstance;
     T (Class::*_pFuncRun)(Param1, Param2, Param3, Param4);
     Arg1 _arg1;
@@ -219,6 +260,15 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2,_arg3,_arg4);
+            _futureWatcher.setFuture(_future);
+            if(_task)
+            {
+                _futureWatcher.disconnect(_task);
+                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+            }
+            else
+                qWarning("HTaskCaller::run():: HTask is NULL");
         }
         else{
             qWarning("HTaskCaller:: Instance or Function pointer is NULL");
@@ -251,6 +301,7 @@ template <typename T, typename Class, typename Param1, typename Arg1, typename P
 class HTaskCaller<T,Class,Param1,Arg1,Param2,Arg2,Param3,Arg3,Param4,Arg4,Param5,Arg5> : public AbstractHTaskCaller
 {
     QFuture<T> _future;
+    QFutureWatcher<T> _futureWatcher;
     Class * _pInstance;
     T (Class::*_pFuncRun)(Param1, Param2, Param3, Param4, Param5);
     Arg1 _arg1;
@@ -274,6 +325,15 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2,_arg3,_arg4,_arg5);
+            _futureWatcher.setFuture(_future);
+            if(_task)
+            {
+                _futureWatcher.disconnect(_task);
+                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+            }
+            else
+                qWarning("HTaskCaller::run():: HTask is NULL");
         }
         else{
             qWarning("HTaskCaller:: Instance or Function pointer is NULL");

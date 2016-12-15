@@ -2,13 +2,14 @@
 
 #include <QDebug>
 
-HTaskManager::HTaskManager()
-    : _mode(synchronous),_currentTask(NULL) {
-    connect(this,SIGNAL(taskStarted(HTask*)),this,SLOT(setCurrentTask(HTask*)));
-    connect(this,SIGNAL(taskFinished(HTask*)),this,SLOT(clearCurrentTask()));
+HTaskManager::HTaskManager(SynchronizationMode mode)
+    : _mode(mode) {
 }
 
 void HTaskManager::addTask(HTask *task){
+    connect(task,SIGNAL(started()),this,SLOT(onTaskStarted()));
+    connect(task,SIGNAL(finished()),this,SLOT(onTaskFinished()));
+
     _tasks.append(task);
     emit taskAdded(task);
 }
@@ -28,15 +29,14 @@ HTask *HTaskManager::task(const QString &taskTitle){
 
 void HTaskManager::run(){
     initTasks();
-    emit started();
+    initRun();
     for(int i = 0; i < _tasks.size(); ++i)
     {
-        emit taskStarted(_tasks[i]);
         _tasks[i]->run();
-        if(_mode == synchronous)
+        if(_mode == sync)
             _tasks[i]->wait();
-        emit taskFinished(_tasks[i]);
     }
+    startWaiting();
 }
 
 const QList<HTask *>& HTaskManager::tasks() const
@@ -56,14 +56,55 @@ void HTaskManager::initTasks()
         task->init();
 }
 
-void HTaskManager::setCurrentTask(HTask *task)
+void HTaskManager::initRun()
 {
-    if(_currentTask != NULL)
-        qWarning("HTaskManager::setCurrentTask:: some task is processed");
-    _currentTask = task;
+    _anyTaskStarted = false;
+    _waiting = false;
+    emit started();
 }
 
-void HTaskManager::clearCurrentTask()
+void HTaskManager::startWaiting()
 {
-    _currentTask = NULL;
+    _waiting = true;
+    checkForFinished();
+}
+
+void HTaskManager::checkForFinished()
+{
+    if(_waiting && _anyTaskStarted && _runningTasks.isEmpty())
+        emit finished();
+}
+
+void HTaskManager::onTaskStarted()
+{
+    HTask *task = dynamic_cast<HTask*>(sender());
+    if(!task){
+        qWarning("HTaskManager::onTaskStarted():: HTask is NULL");
+        return;
+    }
+    _anyTaskStarted = true;
+    _runningTasks.append(task);
+    emit taskStarted(task);
+}
+
+void HTaskManager::onTaskFinished()
+{
+    HTask *task = dynamic_cast<HTask*>(sender());
+    if(!task){
+        qWarning("HTaskManager::onTaskStarted():: HTask is NULL");
+        return;
+    }
+    _runningTasks.removeOne(task);
+    emit taskFinished(task);
+    checkForFinished();
+}
+
+HTaskManager::SynchronizationMode HTaskManager::mode() const
+{
+    return _mode;
+}
+
+void HTaskManager::setMode(const SynchronizationMode &mode)
+{
+    _mode = mode;
 }

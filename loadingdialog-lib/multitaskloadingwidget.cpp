@@ -3,28 +3,31 @@
 
 #include <QDebug>
 
-MultiTaskLoadingWidget::MultiTaskLoadingWidget(const QString &title, const QString &description, QWidget *parent, Qt::WindowFlags fl)
+MultiTaskLoadingWidget::MultiTaskLoadingWidget(HTaskManager *manager, const QString &title, const QString &description, QWidget *parent, Qt::WindowFlags fl)
     : QWidget(parent,fl),
       ui(new Ui::MultiTaskLoadingWidget)
 {
     init();
     setWindowTitle(title);
     setDescription(description);
+    setManager(manager);
 }
 
-MultiTaskLoadingWidget::MultiTaskLoadingWidget(const QString &title, QWidget *parent, Qt::WindowFlags fl)
+MultiTaskLoadingWidget::MultiTaskLoadingWidget(HTaskManager *manager, const QString &title, QWidget *parent, Qt::WindowFlags fl)
     : QWidget(parent,fl),
       ui(new Ui::MultiTaskLoadingWidget)
 {
     init();
     setWindowTitle(title);
+    setManager(manager);
 }
 
-MultiTaskLoadingWidget::MultiTaskLoadingWidget(QWidget *parent, Qt::WindowFlags fl)
+MultiTaskLoadingWidget::MultiTaskLoadingWidget(HTaskManager *manager, QWidget *parent, Qt::WindowFlags fl)
     : QWidget(parent,fl),
       ui(new Ui::MultiTaskLoadingWidget)
 {
     init();
+    setManager(manager);
 }
 
 MultiTaskLoadingWidget::~MultiTaskLoadingWidget()
@@ -69,6 +72,7 @@ void MultiTaskLoadingWidget::initManager()
         addTask(managerTasks[i]);
 
     connect(_manager, SIGNAL(started()), this, SLOT(onStarted()));
+    connect(_manager, SIGNAL(finished()), this, SLOT(onFinished()));
     connect(_manager, SIGNAL(taskAdded(HTask*)), this, SLOT(addTask(HTask*)));
     connect(_manager, SIGNAL(taskRemoved(HTask*)), this, SLOT(removeTask(HTask*)));
     connect(_manager, SIGNAL(taskStarted(HTask*)), this, SLOT(onTaskStarted(HTask*)));
@@ -149,6 +153,11 @@ void MultiTaskLoadingWidget::resizeEvent(QResizeEvent *event)
 void MultiTaskLoadingWidget::onStarted()
 {
     ui->pushButtonCancel->setEnabled(true);
+}
+
+void MultiTaskLoadingWidget::onFinished()
+{
+    close();
 }
 
 void MultiTaskLoadingWidget::on_pushButtonCancel_clicked()

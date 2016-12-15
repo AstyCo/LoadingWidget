@@ -20,11 +20,9 @@ SOURCES += \
     waitingspinnerwidget.cpp \
     htask.cpp \
     abstracthtaskcaller.cpp \
-    htaskcaller.cpp \
     htaskmanager.cpp \
     loadingdialogitem.cpp \
     multitaskloadingwidget.cpp \
-    htaskbreaker.cpp \
     abstracthtaskbreaker.cpp
 
 HEADERS += \

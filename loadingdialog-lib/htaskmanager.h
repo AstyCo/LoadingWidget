@@ -12,11 +12,11 @@ class LOADINGDIALOGSHARED_EXPORT HTaskManager : public QObject
     Q_OBJECT
 public:
     enum SynchronizationMode{
-        synchronous,
-        asynchronous
+        sync,
+        async
     };
 
-    HTaskManager();
+    HTaskManager(SynchronizationMode mode = sync);
 
     void addTask(HTask *task);
     void removeTask(HTask *task);
@@ -26,14 +26,21 @@ public:
     const QList<HTask *>& tasks() const;
     void cancelRuns();
 
+    SynchronizationMode mode() const;
+    void setMode(const SynchronizationMode &mode);
+
 private:
     void initTasks();
+    void initRun();
+    void startWaiting();
+    void checkForFinished();
 private slots:
-    void setCurrentTask(HTask *task);
-    void clearCurrentTask();
+    void onTaskStarted();
+    void onTaskFinished();
 
 signals:
     void started();
+    void finished();
     void taskStarted(HTask *task);
     void taskFinished(HTask *task);
     void taskAdded(HTask *task);
@@ -41,9 +48,9 @@ signals:
 
 private:
     SynchronizationMode _mode;
+    QList<HTask*> _runningTasks;
     QList<HTask*> _tasks;
-    HTask *_currentTask;
-    bool _cancelable;
+    bool _cancelable,_waiting,_anyTaskStarted;
 };
 
 #endif // HTASKMANAGER_H

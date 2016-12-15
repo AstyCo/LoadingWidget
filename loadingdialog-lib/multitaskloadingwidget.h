@@ -18,15 +18,12 @@ class LOADINGDIALOGSHARED_EXPORT MultiTaskLoadingWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MultiTaskLoadingWidget(const QString &title,const QString &description,
+    explicit MultiTaskLoadingWidget(HTaskManager *manager, const QString &title,const QString &description,
                                     QWidget *parent = 0, Qt::WindowFlags fl = 0);
-    explicit MultiTaskLoadingWidget(const QString &title,
+    explicit MultiTaskLoadingWidget(HTaskManager *manager, const QString &title,
                                     QWidget *parent = 0, Qt::WindowFlags fl = 0);
-    explicit MultiTaskLoadingWidget(QWidget *parent = 0, Qt::WindowFlags fl = 0);
+    explicit MultiTaskLoadingWidget(HTaskManager *manager, QWidget *parent = 0, Qt::WindowFlags fl = 0);
     virtual ~MultiTaskLoadingWidget();
-
-    QPointer<HTaskManager> manager() const;
-    void setManager(HTaskManager *manager);
 
     void setDescription(const QString &text);
 
@@ -36,6 +33,7 @@ signals:
 
 private slots:
     void onStarted();
+    void onFinished();
     void addTask(HTask *task);
     void removeTask(HTask *task);
     void onTaskStarted(HTask *task);
@@ -44,6 +42,8 @@ private slots:
     void on_pushButtonCancel_clicked();
 
 private:
+    QPointer<HTaskManager> manager() const;
+    void setManager(HTaskManager *manager);
     void moveToParentCenter();
     void init();
     void setupUi();

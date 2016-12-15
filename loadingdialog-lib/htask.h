@@ -6,16 +6,12 @@
 #include "abstracthtaskcaller.h"
 #include "abstracthtaskbreaker.h"
 
-
+#include <QObject>
 #include <QString>
 
-class LOADINGDIALOGSHARED_EXPORT HTask
+class LOADINGDIALOGSHARED_EXPORT HTask: public QObject
 {
-    bool _canceled;
-    QString _title;
-
-    AbstractHTaskCaller *_pCaller;
-    AbstractHTaskBreaker *_pBreaker;
+    Q_OBJECT
 
 public:
     HTask(AbstractHTaskCaller *pCaller,const QString &title):
@@ -28,13 +24,26 @@ public:
     }
 
     void init();
-    void run();
     void wait(bool eventProcessing = true);
-    void cancel();
     bool cancelable() const;
 
     QString title() const;
     void setTitle(const QString &title);
+
+public slots:
+    void run();
+    void cancel();
+signals:
+    void started();
+    void finished();
+
+private:
+    bool _canceled;
+    QString _title;
+
+    AbstractHTaskCaller *_pCaller;
+    AbstractHTaskBreaker *_pBreaker;
+
 };
 
 

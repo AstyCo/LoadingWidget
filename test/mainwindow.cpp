@@ -24,23 +24,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonMultipleLoadingWidget_clicked()
 {
-    MyClass myClass1, myClass2;
+    static MyClass myClass1, myClass2;
 
-    HTaskManager manager;
+    static HTaskManager manager(HTaskManager::sync);
 
-    manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,100),
+    manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,10),
                                 makeBreaker(&myClass1,&MyClass::cancelComputations),
-                                QString::fromUtf8("От 0 до 100")));
+                                QString::fromUtf8("От 0 до 10")));
     manager.addTask(new HTask(  makeCaller(&myClass2,&MyClass::hardComputationFunction,0,20),
                                 QString::fromUtf8("От 0 до 20")));
+    manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,10),
+                                makeBreaker(&myClass1,&MyClass::cancelComputations),
+                                QString::fromUtf8("От 0 до 10")));
 
-    MultiTaskLoadingWidget *dlg = new MultiTaskLoadingWidget(QString::fromUtf8("Тестовая установка"),
+    MultiTaskLoadingWidget *dlg = new MultiTaskLoadingWidget(&manager,
+                                                             QString::fromUtf8("Тестовая установка"),
                                                              QString::fromUtf8("Это окно отображает работу loadingdialog-lib")
                                                              ,this);
     dlg->show();
-    dlg->setManager(&manager);
     manager.run();
-    dlg->close();
+//    dlg->close(); // not needed
 }
 
 void MainWindow::on_pushButtonLoadingDialog_clicked()

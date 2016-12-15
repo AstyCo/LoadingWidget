@@ -18,10 +18,15 @@ void mySleep(int ms)
 MyClass::MyClass(){}
 
 void MyClass::hardComputationFunction(unsigned int start, long len){
+    static int callNum = 0;
+    int realCN = callNum++;
     _stop = false;
     for(long long i=start;i<len;){
         mySleep(50);
-        qDebug() << "YOOLOO: "<< i;
+        qDebug() << QString(" [%2] till %1 : %3 ")
+                    .arg(QString::number(len))
+                    .arg(QString::number(realCN))
+                    .arg(QString::number(i));
         ++i;
         if(_stop)
             break;
