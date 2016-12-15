@@ -1,6 +1,7 @@
 #ifndef LOADINGDIALOG_H
 #define LOADINGDIALOG_H
 
+#include "loadingdialog_global.h"
 #include "htaskmanager.h"
 
 #include <QDialog>
@@ -13,7 +14,7 @@ namespace Ui {
 class LoadingDialog;
 }
 
-class LoadingDialog : public QDialog
+class LOADINGDIALOGSHARED_EXPORT LoadingDialog : public QDialog
 {
     Q_OBJECT
 public:

@@ -19,6 +19,8 @@ public:
 private slots:
     void on_pushButtonMultipleLoadingWidget_clicked();
 
+    void on_pushButtonLoadingDialog_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

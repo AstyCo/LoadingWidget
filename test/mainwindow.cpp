@@ -31,16 +31,22 @@ void MainWindow::on_pushButtonMultipleLoadingWidget_clicked()
     manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,100),
                                 makeBreaker(&myClass1,&MyClass::cancelComputations),
                                 QString::fromUtf8("От 0 до 100")));
-    manager.addTask(new HTask(  makeCaller(&myClass2,&MyClass::hardComputationFunction,0,10),
-                                QString::fromUtf8("От 0 до 10000")));
+    manager.addTask(new HTask(  makeCaller(&myClass2,&MyClass::hardComputationFunction,0,20),
+                                QString::fromUtf8("От 0 до 20")));
 
     MultiTaskLoadingWidget *dlg = new MultiTaskLoadingWidget(QString::fromUtf8("Тестовая установка"),
                                                              QString::fromUtf8("Это окно отображает работу loadingdialog-lib")
-//                                                             ,this
-                                                             );
+                                                             ,this);
     dlg->show();
     dlg->setManager(&manager);
     manager.run();
     dlg->close();
-    qDebug() << "RETURN";
+}
+
+void MainWindow::on_pushButtonLoadingDialog_clicked()
+{
+    MyClass myClass1;
+    LoadingDialog dlg(this);
+    dlg.setProcessName(QString::fromUtf8("Тест LoadingDialog"));
+    runAndWait(&dlg, &myClass1, &MyClass::hardComputationFunction,0,100);
 }

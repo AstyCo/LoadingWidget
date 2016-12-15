@@ -44,6 +44,7 @@ private slots:
     void on_pushButtonCancel_clicked();
 
 private:
+    void moveToParentCenter();
     void init();
     void setupUi();
 

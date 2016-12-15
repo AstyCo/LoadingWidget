@@ -34,10 +34,10 @@ void LoadingDialog::setVisualWidget(LoadingDialog::VisualWidget which)
         setWindowFlags( Qt::SubWindow | Qt::Dialog | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
         if(parentWidget()!= NULL)
         {
-
-            QPoint parentPos = /*parent->mapToGlobal(*/parentWidget()->pos();
-            move(parentPos.x()+parentWidget()->width()/2- width()/2,
-                        parentPos.y()+parentWidget()->height()/2- height()/2);
+            QPoint dialogCenter = mapToGlobal(rect().center());
+            QPoint parentWindowCenter = parentWidget()->window()->mapToGlobal(
+                parentWidget()->window()->rect().center());
+            move(parentWindowCenter - dialogCenter);
         }
 
         break;
@@ -54,9 +54,6 @@ void LoadingDialog::setVisualWidget(LoadingDialog::VisualWidget which)
             QPoint parentWindowCenter = parentWidget()->window()->mapToGlobal(
                 parentWidget()->window()->rect().center());
             move(parentWindowCenter - dialogCenter);
-        }
-        else
-        {
         }
 
         ui->spinner->setCenterOnlyH(true);

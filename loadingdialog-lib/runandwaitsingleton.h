@@ -1,3 +1,9 @@
+/*
+ * Obsolete
+ *
+ */
+
+
 #ifndef RUNANDWAITSINGLETON_H
 #define RUNANDWAITSINGLETON_H
 
@@ -15,6 +21,17 @@ void waitWithEventProcessing(QFuture<T> &future)
             break;
         QApplication::processEvents();
     }
+}
+
+template <typename T>
+void runAndWait( T *fn()){
+    LoadingDialog dlg(
+                LoadingDialogSingleton::activeWindow());
+    LoadingDialogSingleton::setLoadingDialog(&dlg);
+    dlg.show();
+    QFuture<T> future = QtConcurrent::run(fn);
+    waitWithEventProcessing(future);
+    dlg.close();
 }
 
 template <typename T, typename Class>

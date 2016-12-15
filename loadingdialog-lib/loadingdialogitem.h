@@ -1,13 +1,15 @@
 #ifndef LOADINGDIALOGITEM_H
 #define LOADINGDIALOGITEM_H
 
+#include "loadingdialog_global.h"
+
 #include <QWidget>
 
 namespace Ui {
 class LoadingDialogItem;
 }
 
-class LoadingDialogItem : public QWidget
+class LOADINGDIALOGSHARED_EXPORT LoadingDialogItem : public QWidget
 {
     Q_OBJECT
 

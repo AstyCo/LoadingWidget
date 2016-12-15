@@ -42,14 +42,7 @@ void MultiTaskLoadingWidget::init()
     setWindowFlags( Qt::SubWindow | Qt::Dialog | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
 
     // center on parent
-    if(parentWidget()!= NULL)
-    {
-        QPoint dialogCenter = mapToGlobal(rect().center());
-        QPoint parentWindowCenter = parentWidget()->window()->mapToGlobal(
-            parentWidget()->window()->rect().center());
-
-        move(parentWindowCenter - dialogCenter);
-    }
+    moveToParentCenter();
 
     _manager = NULL;
     ui->verticalLayout->setAlignment(Qt::AlignTop);
@@ -149,8 +142,8 @@ void MultiTaskLoadingWidget::setDescription(const QString &text)
 
 void MultiTaskLoadingWidget::resizeEvent(QResizeEvent *event)
 {
-    // TODO : center on parent
     QWidget::resizeEvent(event);
+    moveToParentCenter();
 }
 
 void MultiTaskLoadingWidget::onStarted()
@@ -162,4 +155,13 @@ void MultiTaskLoadingWidget::on_pushButtonCancel_clicked()
 {
     if(_manager)
         _manager->cancelRuns();
+}
+
+void MultiTaskLoadingWidget::moveToParentCenter()
+{
+    if(parentWidget()!= NULL)
+    {
+        const QPoint global = parentWidget()->mapToGlobal(parentWidget()->rect().center());
+        move(global.x() - width() / 2, global.y() - height() / 2);
+    }
 }

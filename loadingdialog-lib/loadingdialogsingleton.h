@@ -1,12 +1,19 @@
+/*
+ * Obsolete
+ *
+ */
+
 #ifndef LOADINGDIALOGSINGLETON_H
 #define LOADINGDIALOGSINGLETON_H
+
+#include "loadingdialog_global.h"
+#include "loadingdialog.h"
 
 #include <QPointer>
 #include <QWidget>
 
-#include "loadingdialog.h"
 
-class LoadingDialogSingleton
+class LOADINGDIALOGSHARED_EXPORT LoadingDialogSingleton
 {
 public:
     static LoadingDialogSingleton& instance(){
