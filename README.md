@@ -5,8 +5,8 @@
 ## Управления процессами:
 ### HTask - класс задания, (Heave Task)
 	
-HTaskCaller - отвечает за выполнение процесса
-HTaskBreaker - отвечает за отмену выполнения
+* HTaskCaller - отвечает за выполнение процесса
+* HTaskBreaker - отвечает за отмену выполнения
 		
 	
 ### HTaskManager - управляет заданиями(которые HTask)
@@ -18,8 +18,8 @@ HTaskBreaker - отвечает за отмену выполнения
 		
 	
 ## Отображение:
-### LoadingDialog - для одного процесса
-### MultiTaskLoadingWidget - для нескольких процессов
+* LoadingDialog - для одного процесса
+* MultiTaskLoadingWidget - для нескольких процессов
 	
 _Если не закрывается - HTaskManager возможно удалился на стеке_
 	
