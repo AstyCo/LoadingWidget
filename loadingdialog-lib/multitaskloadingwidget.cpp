@@ -126,7 +126,7 @@ void MultiTaskLoadingWidget::onTaskFinished(HTask *task)
     _qhashTasks[task]->onCompleted();
 }
 
-HTaskManager *MultiTaskLoadingWidget::manager() const
+QPointer<HTaskManager> MultiTaskLoadingWidget::manager() const
 {
     return _manager;
 }
@@ -135,7 +135,7 @@ void MultiTaskLoadingWidget::setManager(HTaskManager *manager)
 {
     if(manager == NULL)
         return;
-    if(_manager != NULL)
+    if(_manager)
         removeManagerDepends();
 
     _manager = manager;

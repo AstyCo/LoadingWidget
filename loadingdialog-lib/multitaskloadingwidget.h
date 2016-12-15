@@ -25,7 +25,7 @@ public:
     explicit MultiTaskLoadingWidget(QWidget *parent = 0, Qt::WindowFlags fl = 0);
     virtual ~MultiTaskLoadingWidget();
 
-    HTaskManager *manager() const;
+    QPointer<HTaskManager> manager() const;
     void setManager(HTaskManager *manager);
 
     void setDescription(const QString &text);
@@ -51,7 +51,7 @@ private:
     void initManager();
 private:
     Ui::MultiTaskLoadingWidget *ui;
-    HTaskManager *_manager;
+    QPointer<HTaskManager> _manager;
     QHash<HTask *, LoadingDialogItem *> _qhashTasks;
 };
 
