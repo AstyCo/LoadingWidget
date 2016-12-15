@@ -1,8 +1,6 @@
 #include "loadingdialog.h"
 #include "ui_loadingdialog.h"
 
-#include "loadingdialogsingleton.h"
-
 #include <QDebug>
 #include <QTime>
 #include <QKeyEvent>

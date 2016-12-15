@@ -13,30 +13,140 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="QLabel" name="labelProcessName">
-     <property name="text">
-      <string>&lt;Заголовок процесса&gt;</string>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="minimumSize">
+      <size>
+       <width>14</width>
+       <height>14</height>
+      </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>14</width>
+       <height>14</height>
+      </size>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="pageCheck">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="labelCheck">
+         <property name="minimumSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="icons.qrc">:/icons/check-mark.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageEmpty">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="labelEmpty">
+         <property name="minimumSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>14</width>
+           <height>14</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>0</number>
+    <widget class="QLabel" name="labelText">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="pushButtonCancel">
      <property name="text">
-      <string>Отмена</string>
+      <string>&lt;Заголовок процесса&gt;(&lt;процент&gt;)...</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

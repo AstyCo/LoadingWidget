@@ -1,5 +1,8 @@
 TEMPLATE = subdirs
 
+CONFIG +=  ordered
+
 SUBDIRS += \
     loadingdialog-lib \
-    unit-test
+#    unit-test \
+    test

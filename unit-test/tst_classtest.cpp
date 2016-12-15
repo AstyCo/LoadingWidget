@@ -1,6 +1,7 @@
 #include <QString>
 #include <QtTest>
 
+
 class ClassTest : public QObject
 {
     Q_OBJECT
@@ -21,6 +22,9 @@ void ClassTest::testCase1()
     QVERIFY2(true, "Failure");
 }
 
-QTEST_APPLESS_MAIN(ClassTest)
+//QTEST_APPLESS_MAIN(ClassTest)
+
+
+
 
 #include "tst_classtest.moc"

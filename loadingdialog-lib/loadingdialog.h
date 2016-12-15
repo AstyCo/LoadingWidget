@@ -1,8 +1,6 @@
 #ifndef LOADINGDIALOG_H
 #define LOADINGDIALOG_H
 
-#include "ui_loadingdialog.h"
-
 #include "htaskmanager.h"
 
 #include <QDialog>

@@ -5,12 +5,14 @@
 #-------------------------------------------------
 
 #QT       -= gui
+QT       += core gui
 
 TARGET = loadingdialog-lib
 TEMPLATE = lib
-CONFIG += staticlib
-
+#CONFIG += staticlib
 DEFINES += LOADINGDIALOG_LIBRARY
+
+DESTDIR = $$OUT_PWD/../bin
 
 SOURCES += \
     loadingdialog.cpp \
@@ -18,27 +20,29 @@ SOURCES += \
     waitingspinnerwidget.cpp \
     htask.cpp \
     abstracthtaskcaller.cpp \
-    abstracthtaskcancealer.cpp \
     htaskcaller.cpp \
-    htaskcancealer.cpp \
     htaskmanager.cpp \
     loadingdialogitem.cpp \
-    multitaskloadingwidget.cpp
+    multitaskloadingwidget.cpp \
+    htaskbreaker.cpp \
+    abstracthtaskbreaker.cpp
 
 HEADERS += \
     loadingdialog.h \
     loadingdialogsingleton.h \
-    runandwait.h \
     waitingspinnerwidget.h \
     loadingdialog_global.h \
     htask.h \
     abstracthtaskcaller.h \
-    abstracthtaskcancealer.h \
     htaskcaller.h \
-    htaskcancealer.h \
     htaskmanager.h \
     loadingdialogitem.h \
-    multitaskloadingwidget.h
+    htaskextension.h \
+    multitaskloadingwidget.h \
+    htaskbreaker.h \
+    abstracthtaskbreaker.h \
+    runandwaitsingleton.h \
+    runandwait.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -48,3 +52,12 @@ FORMS += \
     loadingdialog.ui \
     loadingdialogitem.ui \
     multitaskloadingwidget.ui
+
+DISTFILES +=
+
+#include(build_config.pri)
+
+RESOURCES += \
+    icons.qrc
+
+CODECFORTR = UTF-8

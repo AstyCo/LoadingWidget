@@ -10,10 +10,18 @@ void HTask::setTitle(const QString &taskName)
     _title = taskName;
 }
 
-void HTask::run(bool sync){
+void HTask::init()
+{
+    _canceled = false;
+}
+
+void HTask::run(){
+    if(_canceled)
+        return;
+
     if(_pCaller!= NULL)
     {
-        _pCaller->run(sync);
+        _pCaller->run();
     }
     else
     {
@@ -22,14 +30,33 @@ void HTask::run(bool sync){
     }
 }
 
-void HTask::cancel(){
-    if(_pCancealer!= NULL)
+void HTask::wait(bool eventProcessing)
+{
+    if(_pCaller!= NULL)
     {
-        _pCancealer->cancel();
+        _pCaller->wait(eventProcessing);
+    }
+    else
+    {
+        qWarning("HTask:: Trying to Wait task without instance of HTaskCaller");
+        return;
+    }
+}
+
+void HTask::cancel(){
+    _canceled = true;
+    if(_pBreaker!= NULL)
+    {
+        _pBreaker->cancel();
     }
     else
     {
         qWarning("HTask:: Trying to Cancel task without instance of HTaskCancealer");
         return;
     }
+}
+
+bool HTask::cancelable() const
+{
+    return _pBreaker != NULL;
 }

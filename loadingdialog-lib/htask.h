@@ -1,26 +1,37 @@
 #ifndef HTASK_H
 #define HTASK_H
 
+#include "loadingdialog_global.h"
+
 #include "abstracthtaskcaller.h"
-#include "abstracthtaskcancealer.h"
+#include "abstracthtaskbreaker.h"
+
 
 #include <QString>
 
-class HTask
+class LOADINGDIALOGSHARED_EXPORT HTask
 {
+    bool _canceled;
     QString _title;
 
     AbstractHTaskCaller *_pCaller;
-    AbstractHTaskCancealer *_pCancealer;
+    AbstractHTaskBreaker *_pBreaker;
 
 public:
-    HTask(AbstractHTaskCaller *pCaller):
-        _pCaller(pCaller), _pCancealer(NULL) {}
-    HTask(AbstractHTaskCaller *pCaller, AbstractHTaskCancealer *pCancealer):
-        _pCaller(pCaller), _pCancealer(pCancealer) {}
+    HTask(AbstractHTaskCaller *pCaller,const QString &title):
+        _title(title),_pCaller(pCaller), _pBreaker(NULL) {
+        init();
+    }
+    HTask(AbstractHTaskCaller *pCaller, AbstractHTaskBreaker *pBreaker,const QString &title):
+        _title(title),_pCaller(pCaller), _pBreaker(pBreaker) {
+        init();
+    }
 
-    void run(bool sync = true);
+    void init();
+    void run();
+    void wait(bool eventProcessing = true);
     void cancel();
+    bool cancelable() const;
 
     QString title() const;
     void setTitle(const QString &title);
