@@ -9,7 +9,10 @@ QT       += core gui
 
 TARGET = loadingdialog-lib
 TEMPLATE = lib
-#CONFIG += staticlib
+
+CONFIG -= c++11
+QMAKE_CXXFLAGS -= -std=c++0x
+
 DEFINES += LOADINGDIALOG_LIBRARY
 
 DESTDIR = $$OUT_PWD/../bin

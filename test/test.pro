@@ -11,6 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = test
 TEMPLATE = app
 
+CONFIG -= c++11
+QMAKE_CXXFLAGS -= -std=c++0x
+
 DESTDIR = $$OUT_PWD/../bin
 
 release:message(Building in release mode.)

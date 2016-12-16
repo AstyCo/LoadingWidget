@@ -27,12 +27,12 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun);
-            _futureWatcher.setFuture(_future);
             if(_task)
             {
                 _futureWatcher.disconnect(_task);
-                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
-                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                _futureWatcher.setFuture(_future);
             }
             else
                 qWarning("HTaskCaller::run():: HTask is NULL");
@@ -81,12 +81,12 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1);
-            _futureWatcher.setFuture(_future);
             if(_task)
             {
                 _futureWatcher.disconnect(_task);
-                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
-                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                _futureWatcher.setFuture(_future);
             }
             else
                 qWarning("HTaskCaller::run():: HTask is NULL");
@@ -197,12 +197,12 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2,_arg3);
-            _futureWatcher.setFuture(_future);
             if(_task)
             {
                 _futureWatcher.disconnect(_task);
-                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
-                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                _futureWatcher.setFuture(_future);
             }
             else
                 qWarning("HTaskCaller::run():: HTask is NULL");
@@ -260,12 +260,12 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2,_arg3,_arg4);
-            _futureWatcher.setFuture(_future);
             if(_task)
             {
                 _futureWatcher.disconnect(_task);
-                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
-                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                _futureWatcher.setFuture(_future);
             }
             else
                 qWarning("HTaskCaller::run():: HTask is NULL");
@@ -325,12 +325,12 @@ public:
     void run(){
         if(_pInstance!= NULL && _pFuncRun != NULL){
             _future = QtConcurrent::run(_pInstance,_pFuncRun,_arg1,_arg2,_arg3,_arg4,_arg5);
-            _futureWatcher.setFuture(_future);
             if(_task)
             {
                 _futureWatcher.disconnect(_task);
-                connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
-                connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
+                QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+                _futureWatcher.setFuture(_future);
             }
             else
                 qWarning("HTaskCaller::run():: HTask is NULL");

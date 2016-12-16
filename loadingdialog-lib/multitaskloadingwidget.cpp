@@ -153,6 +153,7 @@ void MultiTaskLoadingWidget::resizeEvent(QResizeEvent *event)
 void MultiTaskLoadingWidget::onStarted()
 {
     ui->pushButtonCancel->setEnabled(true);
+    show();
 }
 
 void MultiTaskLoadingWidget::onFinished()

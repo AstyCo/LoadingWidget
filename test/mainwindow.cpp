@@ -24,8 +24,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonMultipleLoadingWidget_clicked()
 {
-    static MyClass myClass1, myClass2;
-
+    static MyClass myClass1, myClass2; // static - не освобождать при завершении блока (критично при async)
     static HTaskManager manager(HTaskManager::sync);
 
     manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,10),
@@ -41,9 +40,9 @@ void MainWindow::on_pushButtonMultipleLoadingWidget_clicked()
                                                              QString::fromUtf8("Тестовая установка"),
                                                              QString::fromUtf8("Это окно отображает работу loadingdialog-lib")
                                                              ,this);
-    dlg->show();
+//    dlg->show(); // not needed (called on HTaskManager::started())
     manager.run();
-//    dlg->close(); // not needed
+//    dlg->close();// not needed (called on HTaskManager::finished())
 }
 
 void MainWindow::on_pushButtonLoadingDialog_clicked()
