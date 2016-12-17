@@ -6,12 +6,10 @@
 
 #QT       -= gui
 QT       += core gui
+QMAKE_CXXFLAGS += -Wall
 
 TARGET = loadingdialog-lib
 TEMPLATE = lib
-
-CONFIG -= c++11
-QMAKE_CXXFLAGS -= -std=c++0x
 
 DEFINES += LOADINGDIALOG_LIBRARY
 

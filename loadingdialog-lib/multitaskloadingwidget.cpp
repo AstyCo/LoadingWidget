@@ -68,7 +68,7 @@ void MultiTaskLoadingWidget::removeManagerDepends()
 void MultiTaskLoadingWidget::initManager()
 {
     const QList<HTask *> &managerTasks = _manager->tasks();
-    for(unsigned int i = 0; i < managerTasks.size(); ++i)
+    for(int i = 0; i < managerTasks.size(); ++i)
         addTask(managerTasks[i]);
 
     connect(_manager, SIGNAL(started()), this, SLOT(onStarted()));

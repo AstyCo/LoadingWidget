@@ -4,11 +4,20 @@
 #include "abstracthtaskbreaker.h"
 #include <QtConcurrentRun>
 
-template <typename...> class HTaskBreaker;
+template <typename T, typename Class = void,
+          typename Param1 = void,  typename Arg1 = void,
+          typename Param2 = void,  typename Arg2 = void,
+          typename Param3 = void,  typename Arg3 = void,
+          typename Param4 = void,  typename Arg4 = void,
+          typename Param5 = void,  typename Arg5 = void >
+class HTaskBreaker;
+
 
 /// Class member : 0 arg
 template <typename T, typename Class>
-class HTaskBreaker<T,Class> : public AbstractHTaskBreaker
+class HTaskBreaker< T,Class,
+                    void, void, void, void, void, void, void, void, void, void >
+        : public AbstractHTaskBreaker
 {
     QFuture<T> _future;
     Class * _pInstance;
@@ -46,7 +55,9 @@ public:
 
 /// Class member : 1 arg
 template <typename T, typename Class, typename Param1, typename Arg1>
-class HTaskBreaker<T,Class,Param1,Arg1> : public AbstractHTaskBreaker
+class HTaskBreaker< T,Class,Param1,Arg1,
+                    void, void, void, void, void, void, void, void >
+        : public AbstractHTaskBreaker
 {
     QFuture<T> _future;
     Class * _pInstance;
@@ -86,7 +97,9 @@ public:
 
 /// Class member : 2 arg
 template <typename T, typename Class, typename Param1, typename Arg1, typename Param2, typename Arg2>
-class HTaskBreaker<T,Class,Param1,Arg1,Param2,Arg2> : public AbstractHTaskBreaker
+class HTaskBreaker< T,Class,Param1,Arg1,Param2,Arg2,
+                    void, void, void, void, void, void >
+        : public AbstractHTaskBreaker
 {
     QFuture<T> _future;
     Class * _pInstance;
@@ -127,9 +140,11 @@ public:
 };
 
 /// Class member : 3 arg
-template <typename T, typename Class, typename Param1, typename Arg1
-          , typename Param2, typename Arg2, typename Param3, typename Arg3>
-class HTaskBreaker<T,Class,Param1,Arg1,Param2,Arg2,Param3,Arg3> : public AbstractHTaskBreaker
+template <typename T, typename Class, typename Param1, typename Arg1,
+          typename Param2, typename Arg2, typename Param3, typename Arg3>
+class HTaskBreaker< T,Class,Param1,Arg1,Param2,Arg2,Param3,Arg3,
+                    void, void, void, void >
+        : public AbstractHTaskBreaker
 {
     QFuture<T> _future;
     Class * _pInstance;
@@ -174,11 +189,11 @@ public:
 };
 
 /// Class member : 4 arg
-template <typename T, typename Class, typename Param1, typename Arg1
-          , typename Param2, typename Arg2, typename Param3, typename Arg3
-          , typename Param4, typename Arg4>
-class HTaskBreaker<T,Class
-        ,Param1,Arg1,Param2,Arg2,Param3,Arg3,Param4,Arg4>
+template <typename T, typename Class,
+          typename Param1, typename Arg1, typename Param2, typename Arg2,
+          typename Param3, typename Arg3, typename Param4, typename Arg4>
+class HTaskBreaker< T,Class,Param1,Arg1,Param2,Arg2,Param3,Arg3,Param4,Arg4,
+                    void, void >
         : public AbstractHTaskBreaker
 {
     QFuture<T> _future;
@@ -226,11 +241,11 @@ public:
 };
 
 /// Class member : 5 arg
-template <typename T, typename Class, typename Param1, typename Arg1
-          , typename Param2, typename Arg2, typename Param3, typename Arg3
-          , typename Param4, typename Arg4, typename Param5, typename Arg5>
-class HTaskBreaker<T,Class
-        ,Param1,Arg1,Param2,Arg2,Param3,Arg3,Param4,Arg4,Param5,Arg5>
+template <typename T, typename Class,
+          typename Param1, typename Arg1, typename Param2, typename Arg2,
+          typename Param3, typename Arg3, typename Param4, typename Arg4,
+          typename Param5, typename Arg5>
+class HTaskBreaker
         : public AbstractHTaskBreaker
 {
     QFuture<T> _future;
