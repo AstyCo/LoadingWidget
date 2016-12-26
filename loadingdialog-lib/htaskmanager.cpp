@@ -1,5 +1,6 @@
 #include "htaskmanager.h"
 #include "multitaskloadingwidget.h"
+#include "singleloadingwidget.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -8,6 +9,17 @@ HTaskManager::HTaskManager(SynchronizationMode mode)
     : _mode(mode)
 {
     init();
+}
+
+HTaskManager::HTaskManager(HTask *task, QWidget *parentWidget, const QString &title, const QString &description, HTaskManager::SynchronizationMode mode)
+    : _mode(mode)
+{
+    init();
+    _title = title;
+    _description = description;
+    _parentWidget = parentWidget;
+
+    addTask(task);
 }
 
 HTaskManager::HTaskManager( QWidget *parentWidget,
@@ -25,6 +37,9 @@ HTaskManager::HTaskManager( QWidget *parentWidget,
 void HTaskManager::addTask(HTask *task){
     connect(task,SIGNAL(started()),this,SLOT(onTaskStarted()));
     connect(task,SIGNAL(finished()),this,SLOT(onTaskFinished()));
+//    connect(task,SIGNAL(paused()),this,SLOT(onTaskPaused()));
+//    connect(task,SIGNAL(resumed()),this,SLOT(onTaskResumed()));
+
 
     _tasks.append(task);
     emit taskAdded(task);
@@ -47,6 +62,7 @@ void HTaskManager::run(){
     if(_tasks.empty())
         return;
 
+    QApplication::processEvents(); // calls all delayed [deleteLater]
     if(!_widget)
         initWidget(); // Initialize default MultiTaskLoadingWidget
 
@@ -128,6 +144,31 @@ void HTaskManager::onTaskFinished()
     isFinished();
 }
 
+void HTaskManager::setPlayMode(LoadingDialog::PlayMode playMode)
+{
+    _playMode = playMode;
+}
+
+//void HTaskManager::onTaskPaused()
+//{
+//    HTask *task = dynamic_cast<HTask*>(sender());
+//    if(!task){
+//        qWarning("HTaskManager::onTaskStarted():: HTask is NULL");
+//        return;
+//    }
+//    qDebug() << "task PAUSED "<< task->title();
+//}
+
+//void HTaskManager::onTaskResumed()
+//{
+//    HTask *task = dynamic_cast<HTask*>(sender());
+//    if(!task){
+//        qWarning("HTaskManager::onTaskStarted():: HTask is NULL");
+//        return;
+//    }
+//    qDebug() << "task RESUMED "<< task->title();
+//}
+
 QWidget *HTaskManager::widget() const
 {
     return _widget.data();
@@ -151,13 +192,18 @@ void HTaskManager::setMode(const SynchronizationMode &mode)
 void HTaskManager::init()
 {
     _widget = NULL;
+    _playMode = LoadingDialog::modeUnlimitted;
 }
 
 void HTaskManager::initWidget()
 {
-    if(_widget){
+    if(_widget)
         qWarning("HTaskManager::initWidget:: _widget not NULL");
-    }
-    _widget = new MultiTaskLoadingWidget(this,
-                                         _title,_description,_parentWidget);
+
+    if(_tasks.size() == 1)
+        _widget = new SingleLoadingWidget(
+                    _tasks[0],this,_title,_description,_playMode,_parentWidget);
+    else
+        _widget = new MultiTaskLoadingWidget(
+                    this,_title,_description,_parentWidget);
 }

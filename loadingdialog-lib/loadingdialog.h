@@ -2,7 +2,6 @@
 #define LOADINGDIALOG_H
 
 #include "loadingdialog_global.h"
-#include "htaskmanager.h"
 
 #include <QDialog>
 #include <QThread>
@@ -35,6 +34,7 @@ public:
     void setVisualWidget(LoadingDialog::VisualWidget which); ///< Выбор режима отображения: Полоса загрузки, или Спиннер
     void setUnlimittedMode();
     void setDefiniteMode();
+    void setPlayMode(LoadingDialog::PlayMode playMode);
 
 
 
@@ -46,11 +46,13 @@ public slots:
 
     void setProcess(int proc); ///< От 0 до 100
     void setProcessName(const QString &str); ///< Имя процесса
+    void setDescription(const QString &str); ///< Описание
 
 private:
     void init();
     void initSpinner();
     void initProgressBar();
+    void moveToParentCenter();
 
 private:
     Ui::LoadingDialog *ui;

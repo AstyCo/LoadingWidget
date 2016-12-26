@@ -23,7 +23,8 @@ SOURCES += \
     htaskmanager.cpp \
     multitaskloadingwidget.cpp \
     abstracthtaskbreaker.cpp \
-    loadingitem.cpp
+    loadingitem.cpp \
+    singleloadingwidget.cpp
 
 HEADERS += \
     loadingdialog.h \
@@ -38,7 +39,8 @@ HEADERS += \
     htaskbreaker.h \
     abstracthtaskbreaker.h \
     runandwait.h \
-    loadingitem.h
+    loadingitem.h \
+    singleloadingwidget.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

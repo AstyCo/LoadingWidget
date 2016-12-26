@@ -100,13 +100,13 @@ void MainWindow::on_pushButton_clicked()
 {
     MyClass myClass1;
     HTaskManager manager(
+                new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,2000),
+                                                makeBreaker(&myClass1,&MyClass::cancelComputations),
+                                                QString::fromUtf8("От 0 до 2000")),
                 this,
                 QString::fromUtf8("Тестовая установка"),
                 QString::fromUtf8("Это окно отображает работу loadingdialog-lib"),
                 HTaskManager::async);
 
-    manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,2000),
-                                makeBreaker(&myClass1,&MyClass::cancelComputations),
-                                QString::fromUtf8("От 0 до 2000")));
     manager.run();
 }

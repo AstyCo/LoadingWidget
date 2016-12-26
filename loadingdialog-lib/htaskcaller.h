@@ -154,6 +154,8 @@ public:
                 _futureWatcher.disconnect(_task);
                 QObject::connect(&_futureWatcher,SIGNAL(started()),_task,SIGNAL(started()));
                 QObject::connect(&_futureWatcher,SIGNAL(finished()),_task,SIGNAL(finished()));
+//                QObject::connect(&_futureWatcher,SIGNAL(paused()),_task,SIGNAL(paused()));
+//                QObject::connect(&_futureWatcher,SIGNAL(resumed()),_task,SIGNAL(resumed()));
                 _futureWatcher.setFuture(_future);
             }
             else

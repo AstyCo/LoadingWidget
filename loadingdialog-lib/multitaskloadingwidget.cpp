@@ -1,6 +1,8 @@
 #include "multitaskloadingwidget.h"
 #include "ui_multitaskloadingwidget.h"
 
+#include "loadingdialog.h"
+
 #include <QDebug>
 
 MultiTaskLoadingWidget::MultiTaskLoadingWidget(HTaskManager *manager, const QString &title, const QString &description, QWidget *parent, Qt::WindowFlags fl)

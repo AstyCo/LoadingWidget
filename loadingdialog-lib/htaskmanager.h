@@ -3,6 +3,7 @@
 
 #include "loadingdialog_global.h"
 #include "htask.h"
+#include "loadingdialog.h"
 
 #include <QPointer>
 #include <QWidget>
@@ -19,6 +20,14 @@ public:
     };
 
     HTaskManager(SynchronizationMode mode = sync);
+
+    HTaskManager(
+            HTask *task,
+            QWidget *parentWidget = NULL,
+            const QString &title = QString::fromUtf8("Подождите, пожалуйста..."),
+            const QString &description = QString(),
+            SynchronizationMode mode = sync );
+
     HTaskManager( QWidget *parentWidget = NULL,
             const QString &title = QString::fromUtf8("Подождите, пожалуйста..."),
             const QString &description = QString(),
@@ -37,6 +46,8 @@ public:
 
     QWidget *widget() const;
     void setWidget(const QPointer<QWidget> &widget);
+
+    void setPlayMode(LoadingDialog::PlayMode playMode);
 
 private:
     void init();
@@ -61,6 +72,9 @@ private:
     QPointer<QWidget> _widget;
     QString _title,_description;
     QWidget *_parentWidget;
+    // only for LoadingDialog
+    LoadingDialog::PlayMode _playMode;
+    //
 
     SynchronizationMode _mode;
     QList<HTask*> _runningTasks;

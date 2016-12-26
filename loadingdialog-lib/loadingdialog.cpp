@@ -32,13 +32,7 @@ void LoadingDialog::setVisualWidget(LoadingDialog::VisualWidget which)
         resize(300,100);
 
         setWindowFlags( Qt::SubWindow | Qt::Dialog | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
-        if(parentWidget()!= NULL)
-        {
-            QPoint dialogCenter = mapToGlobal(rect().center());
-            QPoint parentWindowCenter = parentWidget()->window()->mapToGlobal(
-                parentWidget()->window()->rect().center());
-            move(parentWindowCenter - dialogCenter);
-        }
+        moveToParentCenter();
 
         break;
     case widgetSpinner:
@@ -48,13 +42,7 @@ void LoadingDialog::setVisualWidget(LoadingDialog::VisualWidget which)
 
         setWindowFlags( Qt::SubWindow | Qt::Dialog | Qt::WindowTitleHint | Qt::WindowStaysOnTopHint);
         resize(300,150);
-        if(parentWidget()!= NULL)
-        {
-            QPoint dialogCenter = mapToGlobal(rect().center());
-            QPoint parentWindowCenter = parentWidget()->window()->mapToGlobal(
-                parentWidget()->window()->rect().center());
-            move(parentWindowCenter - dialogCenter);
-        }
+        moveToParentCenter();
 
         ui->spinner->setCenterOnlyH(true);
         ui->spinner->setDisableParentWhenSpinning(false);
@@ -101,6 +89,15 @@ void LoadingDialog::initProgressBar()
     ui->progressBar->setValue(0);
 }
 
+void LoadingDialog::moveToParentCenter()
+{
+    if(parentWidget()!= NULL)
+    {
+        const QPoint global = parentWidget()->mapToGlobal(parentWidget()->rect().center());
+        move(global.x() - width() / 2, global.y() - height() / 2);
+    }
+}
+
 
 void LoadingDialog::setUnlimittedMode()
 {
@@ -117,6 +114,20 @@ void LoadingDialog::setDefiniteMode()
     ui->progressBar->setValue(0);
 }
 
+void LoadingDialog::setPlayMode(LoadingDialog::PlayMode playMode)
+{
+    switch(playMode){
+    case modeUnlimitted:
+        setUnlimittedMode();
+        break;
+    case modeDefinite:
+        setDefiniteMode();
+        break;
+    default:
+        return;
+    }
+}
+
 //bool LoadingDialog::close()
 //{
 //    if(LoadingDialogSingleton::loadingDialog()==this)
@@ -129,6 +140,7 @@ void LoadingDialog::setDefiniteMode()
 void LoadingDialog::resizeEvent(QResizeEvent *e)
 {
     QDialog::resizeEvent(e);
+    moveToParentCenter();
     ui->spinner->updatePosition();
     update();
 }
@@ -161,5 +173,9 @@ void LoadingDialog::setProcess(int proc)
 void LoadingDialog::setProcessName(const QString &str)
 {
     setWindowTitle(str);
+}
+
+void LoadingDialog::setDescription(const QString &str)
+{
     ui->labelProcessName->setText(str);
 }

@@ -36,6 +36,8 @@ public slots:
 signals:
     void started();
     void finished();
+    void paused();
+    void resumed();
 
 private:
     bool _canceled;

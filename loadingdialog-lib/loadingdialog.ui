@@ -58,6 +58,12 @@
      <property name="value">
       <number>24</number>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="textDirection">
+      <enum>QProgressBar::TopToBottom</enum>
+     </property>
     </widget>
    </item>
    <item>
