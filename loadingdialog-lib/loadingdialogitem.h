@@ -19,15 +19,23 @@ public:
 
     void setProcessName(const QString &processName);
 
+
 public slots:
+    void showSkip();
+    void hideSkip();
     void onStarted();
     void onCompleted();
 
     void setPercent(int percent);
 
+signals:
+    void skip();
+
 private slots:
     void updateText();
     void onTimer();
+    void on_pushButtonSkip_clicked();
+
 private:
     void showStarted();
     void showCompleted();

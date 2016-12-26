@@ -58,11 +58,8 @@ void MultiTaskLoadingWidget::removeManagerDepends()
     // disconnects all signals from last manager, that is the probably reason of QPointer
         _manager->disconnect(this);
 
-    QHash<HTask *,LoadingDialogItem *>::const_iterator it = _qhashTasks.constBegin();
-    while (it != _qhashTasks.constEnd()) {
-        removeTask(it.key());
-        ++it;
-    }
+    foreach(HTask *task, _qhashTasks.keys())
+        removeTask(task);
 }
 
 void MultiTaskLoadingWidget::initManager()
@@ -84,8 +81,15 @@ void MultiTaskLoadingWidget::addTask(HTask *task)
     LoadingDialogItem *item = new LoadingDialogItem();
     ui->verticalLayoutLoadingItems->addWidget(item);
     item->setProcessName(task->title());
-    _qhashTasks.insert(task,item);
+    if(task->cancelable()){
+        item->showSkip();
+        connect(item,SIGNAL(skip()),task,SLOT(cancel()));
+        connect(task,SIGNAL(finished()),item,SLOT(hideSkip()));
+    }
+    else
+        item->hideSkip();
 
+    _qhashTasks.insert(task,item);
     adjustSize();
 }
 
@@ -108,8 +112,6 @@ void MultiTaskLoadingWidget::onTaskStarted(HTask *task)
         qWarning("LoadingWidget::onTaskStarted:: Hash doesn't contain task");
         return;
     }
-    if(!task->cancelable())
-        ui->pushButtonCancel->setEnabled(false);
     _qhashTasks[task]->onStarted();
 }
 
@@ -152,7 +154,10 @@ void MultiTaskLoadingWidget::resizeEvent(QResizeEvent *event)
 
 void MultiTaskLoadingWidget::onStarted()
 {
-    ui->pushButtonCancel->setEnabled(true);
+    if(cancelableTasks())
+        ui->pushButtonCancel->setEnabled(true);
+    else
+        ui->pushButtonCancel->setEnabled(false);
     show();
 }
 
@@ -165,6 +170,16 @@ void MultiTaskLoadingWidget::on_pushButtonCancel_clicked()
 {
     if(_manager)
         _manager->cancelRuns();
+}
+
+bool MultiTaskLoadingWidget::cancelableTasks() const
+{
+    if(_qhashTasks.empty())
+        return false;
+    foreach(HTask *task,_qhashTasks.keys())
+        if(!task->cancelable())
+            return false;
+    return true;
 }
 
 void MultiTaskLoadingWidget::moveToParentCenter()

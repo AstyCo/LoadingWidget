@@ -42,6 +42,7 @@ private slots:
     void on_pushButtonCancel_clicked();
 
 private:
+    bool cancelableTasks() const;
     QPointer<HTaskManager> manager() const;
     void setManager(HTaskManager *manager);
     void moveToParentCenter();

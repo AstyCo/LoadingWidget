@@ -4,6 +4,8 @@
 #include "loadingdialog_global.h"
 #include "htask.h"
 
+#include <QPointer>
+#include <QWidget>
 #include <QObject>
 #include <QList>
 
@@ -17,6 +19,12 @@ public:
     };
 
     HTaskManager(SynchronizationMode mode = sync);
+    HTaskManager(
+            const QString &title = QString::fromUtf8("Подождите, пожалуйста..."),
+            const QString &description = QString(),
+            QWidget *parentWidget = NULL,
+            SynchronizationMode mode = sync
+            );
 
     void addTask(HTask *task);
     void removeTask(HTask *task);
@@ -29,11 +37,16 @@ public:
     SynchronizationMode mode() const;
     void setMode(const SynchronizationMode &mode);
 
+    QPointer<QWidget> widget() const;
+    void setWidget(const QPointer<QWidget> &widget);
+
 private:
+    void init();
+    void initWidget();
     void initTasks();
     void initRun();
     void startWaiting();
-    void checkForFinished();
+    bool isFinished();
 private slots:
     void onTaskStarted();
     void onTaskFinished();
@@ -47,6 +60,10 @@ signals:
     void taskRemoved(HTask *task);
 
 private:
+    QPointer<QWidget> _widget;
+    QString _title,_description;
+    QWidget *_parentWidget;
+
     SynchronizationMode _mode;
     QList<HTask*> _runningTasks;
     QList<HTask*> _tasks;

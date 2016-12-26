@@ -21,6 +21,17 @@ void LoadingDialogItem::setProcessName(const QString &processName)
     updateText();
 }
 
+void LoadingDialogItem::showSkip()
+{
+    ui->pushButtonSkip->show();
+}
+
+void LoadingDialogItem::hideSkip()
+{
+    ui->pushButtonSkip->hide();
+}
+
+
 void LoadingDialogItem::onStarted()
 {
     _evaluate = true;
@@ -132,4 +143,11 @@ QString LoadingDialogItem::labelStylesheet(bool enable) const
         return "font-weight: bold; color: black";
     else
         return "font-weight: normal; color: gray";
+}
+
+void LoadingDialogItem::on_pushButtonSkip_clicked()
+{
+    ui->pushButtonSkip->setText(QString::fromUtf8("Не выполнять"));
+    ui->pushButtonSkip->setEnabled(false);
+    emit skip();
 }

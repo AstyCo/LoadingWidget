@@ -1,9 +1,21 @@
 #include "htaskmanager.h"
+#include "multitaskloadingwidget.h"
 
+#include <QApplication>
 #include <QDebug>
 
 HTaskManager::HTaskManager(SynchronizationMode mode)
     : _mode(mode) {
+    init();
+}
+
+HTaskManager::HTaskManager(const QString &title, const QString &description, QWidget *parentWidget, HTaskManager::SynchronizationMode mode):
+    _mode(mode)
+{
+    init();
+    _title = title;
+    _description = description;
+    _parentWidget = parentWidget;
 }
 
 void HTaskManager::addTask(HTask *task){
@@ -28,6 +40,11 @@ HTask *HTaskManager::task(const QString &taskTitle){
 }
 
 void HTaskManager::run(){
+    if(!_widget)
+        initWidget();
+    if(_tasks.empty())
+        return;
+
     initTasks();
     initRun();
     for(int i = 0; i < _tasks.size(); ++i)
@@ -66,13 +83,20 @@ void HTaskManager::initRun()
 void HTaskManager::startWaiting()
 {
     _waiting = true;
-    checkForFinished();
+    for(;;){
+        if(isFinished())
+            return;
+        QApplication::processEvents();
+    }
 }
 
-void HTaskManager::checkForFinished()
+bool HTaskManager::isFinished()
 {
-    if(_waiting && _anyTaskStarted && _runningTasks.isEmpty())
+    if(_waiting && _anyTaskStarted && _runningTasks.isEmpty()){
         emit finished();
+        return true;
+    }
+    return false;
 }
 
 void HTaskManager::onTaskStarted()
@@ -82,8 +106,8 @@ void HTaskManager::onTaskStarted()
         qWarning("HTaskManager::onTaskStarted():: HTask is NULL");
         return;
     }
-    _anyTaskStarted = true;
     _runningTasks.append(task);
+    _anyTaskStarted = true;
     emit taskStarted(task);
 }
 
@@ -96,7 +120,17 @@ void HTaskManager::onTaskFinished()
     }
     _runningTasks.removeOne(task);
     emit taskFinished(task);
-    checkForFinished();
+    isFinished();
+}
+
+QPointer<QWidget> HTaskManager::widget() const
+{
+    return _widget;
+}
+
+void HTaskManager::setWidget(const QPointer<QWidget> &widget)
+{
+    _widget = widget;
 }
 
 HTaskManager::SynchronizationMode HTaskManager::mode() const
@@ -107,4 +141,18 @@ HTaskManager::SynchronizationMode HTaskManager::mode() const
 void HTaskManager::setMode(const SynchronizationMode &mode)
 {
     _mode = mode;
+}
+
+void HTaskManager::init()
+{
+    _widget = NULL;
+}
+
+void HTaskManager::initWidget()
+{
+    if(_widget){
+        qWarning("HTaskManager::initWidget:: _widget not NULL");
+    }
+    _widget = new MultiTaskLoadingWidget(this,
+                                         _title,_description,_parentWidget);
 }
