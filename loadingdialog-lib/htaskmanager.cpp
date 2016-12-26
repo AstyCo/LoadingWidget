@@ -5,12 +5,16 @@
 #include <QDebug>
 
 HTaskManager::HTaskManager(SynchronizationMode mode)
-    : _mode(mode) {
+    : _mode(mode)
+{
     init();
 }
 
-HTaskManager::HTaskManager(const QString &title, const QString &description, QWidget *parentWidget, HTaskManager::SynchronizationMode mode):
-    _mode(mode)
+HTaskManager::HTaskManager( QWidget *parentWidget,
+            const QString &title,
+            const QString &description,
+            HTaskManager::SynchronizationMode mode)
+    : _mode(mode)
 {
     init();
     _title = title;
@@ -40,10 +44,11 @@ HTask *HTaskManager::task(const QString &taskTitle){
 }
 
 void HTaskManager::run(){
-    if(!_widget)
-        initWidget();
     if(_tasks.empty())
         return;
+
+    if(!_widget)
+        initWidget(); // Initialize default MultiTaskLoadingWidget
 
     initTasks();
     initRun();
@@ -123,9 +128,9 @@ void HTaskManager::onTaskFinished()
     isFinished();
 }
 
-QPointer<QWidget> HTaskManager::widget() const
+QWidget *HTaskManager::widget() const
 {
-    return _widget;
+    return _widget.data();
 }
 
 void HTaskManager::setWidget(const QPointer<QWidget> &widget)

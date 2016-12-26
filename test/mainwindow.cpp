@@ -24,11 +24,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonMultipleLoadingWidget_clicked()
 {
-    static MyClass myClass1, myClass2, myClass3; // static - не освобождать при завершении блока (критично при async)
+    MyClass myClass1, myClass2, myClass3;
     HTaskManager manager(
+                this,
                 QString::fromUtf8("Тестовая установка"),
                 QString::fromUtf8("Это окно отображает работу loadingdialog-lib"),
-                this,
                 HTaskManager::sync);
 
     manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,30),
@@ -53,7 +53,7 @@ void MainWindow::on_pushButtonLoadingDialog_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    static MyClass myClass1,
+    MyClass myClass1,
             myClass2,
             myClass3,
             myClass4,
@@ -62,11 +62,11 @@ void MainWindow::on_pushButton_2_clicked()
             myClass7,
             myClass8,
             myClass9
-            ; // static - не освобождать при завершении блока (критично при async)
+            ;
     HTaskManager manager(
+                this,
                 QString::fromUtf8("Тестовая установка"),
                 QString::fromUtf8("Это окно отображает работу loadingdialog-lib"),
-                this,
                 HTaskManager::async);
 
     manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,20),
@@ -99,15 +99,15 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    static MyClass myClass1, myClass2; // static - не освобождать при завершении блока (критично при async)
+    MyClass myClass1;
     HTaskManager manager(
+                this,
                 QString::fromUtf8("Тестовая установка"),
                 QString::fromUtf8("Это окно отображает работу loadingdialog-lib"),
-                this,
                 HTaskManager::async);
 
-    manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,20),
+    manager.addTask(new HTask(  makeCaller(&myClass1,&MyClass::hardComputationFunction,0,2000),
                                 makeBreaker(&myClass1,&MyClass::cancelComputations),
-                                QString::fromUtf8("От 0 до 20")));
+                                QString::fromUtf8("От 0 до 2000")));
     manager.run();
 }

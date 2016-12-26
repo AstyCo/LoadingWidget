@@ -19,12 +19,10 @@ public:
     };
 
     HTaskManager(SynchronizationMode mode = sync);
-    HTaskManager(
+    HTaskManager( QWidget *parentWidget = NULL,
             const QString &title = QString::fromUtf8("Подождите, пожалуйста..."),
             const QString &description = QString(),
-            QWidget *parentWidget = NULL,
-            SynchronizationMode mode = sync
-            );
+            SynchronizationMode mode = sync );
 
     void addTask(HTask *task);
     void removeTask(HTask *task);
@@ -37,7 +35,7 @@ public:
     SynchronizationMode mode() const;
     void setMode(const SynchronizationMode &mode);
 
-    QPointer<QWidget> widget() const;
+    QWidget *widget() const;
     void setWidget(const QPointer<QWidget> &widget);
 
 private:
