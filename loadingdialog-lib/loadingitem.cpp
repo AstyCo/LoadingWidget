@@ -1,68 +1,68 @@
-#include "loadingdialogitem.h"
-#include "ui_loadingdialogitem.h"
+#include "loadingitem.h"
+#include "ui_loadingitem.h"
 
 #include <QTimer>
 
-LoadingDialogItem::LoadingDialogItem(QWidget *parent) :
+LoadingItem::LoadingItem(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::LoadingDialogItem)
+    ui(new Ui::LoadingItem)
 {
     init();
 }
 
-LoadingDialogItem::~LoadingDialogItem()
+LoadingItem::~LoadingItem()
 {
     delete ui;
 }
 
-void LoadingDialogItem::setProcessName(const QString &processName)
+void LoadingItem::setProcessName(const QString &processName)
 {
     _processName=processName;
     updateText();
 }
 
-void LoadingDialogItem::showSkip()
+void LoadingItem::showSkip()
 {
     ui->pushButtonSkip->show();
 }
 
-void LoadingDialogItem::hideSkip()
+void LoadingItem::hideSkip()
 {
     ui->pushButtonSkip->hide();
 }
 
 
-void LoadingDialogItem::onStarted()
+void LoadingItem::onStarted()
 {
     _evaluate = true;
     startTimer();
     showStarted();
 }
 
-void LoadingDialogItem::onCompleted()
+void LoadingItem::onCompleted()
 {
     _evaluate = false;
     killTimer();
     showCompleted();
 }
 
-void LoadingDialogItem::setPercent(int percent)
+void LoadingItem::setPercent(int percent)
 {
     if(percent<0 || percent>100)
         qWarning(qPrintable(
-                     QString("LoadingDialogItem::setPercent:: in range [0..100], but given %1")
+                     QString("LoadingItem::setPercent:: in range [0..100], but given %1")
                      .arg(QString::number(percent))));
     _percent=percent;
     updateText();
 }
 
-void LoadingDialogItem::showStarted()
+void LoadingItem::showStarted()
 {
     ui->labelText->setStyleSheet(labelStylesheet(true));
     updateText();
 }
 
-void LoadingDialogItem::showCompleted()
+void LoadingItem::showCompleted()
 {
     ui->labelText->setStyleSheet(labelStylesheet(false));
     ui->stackedWidget->setCurrentWidget(ui->pageCheck);
@@ -70,7 +70,7 @@ void LoadingDialogItem::showCompleted()
     updateText();
 }
 
-void LoadingDialogItem::init()
+void LoadingItem::init()
 {
     ui->setupUi(this);
 
@@ -88,7 +88,7 @@ void LoadingDialogItem::init()
 //    setMinimumHeight(height);
 }
 
-void LoadingDialogItem::startTimer()
+void LoadingItem::startTimer()
 {
     if(_timer)
         killTimer();
@@ -98,7 +98,7 @@ void LoadingDialogItem::startTimer()
     _timer->start(400);
 }
 
-void LoadingDialogItem::killTimer()
+void LoadingItem::killTimer()
 {
     if(_timer == NULL)
         return;
@@ -108,7 +108,7 @@ void LoadingDialogItem::killTimer()
     _timer = NULL;
 }
 
-void LoadingDialogItem::updateText()
+void LoadingItem::updateText()
 {
     QString text = _processName;
     if(_evaluate){
@@ -122,13 +122,13 @@ void LoadingDialogItem::updateText()
 //                                                :QString()));
 }
 
-void LoadingDialogItem::onTimer()
+void LoadingItem::onTimer()
 {
     _dots++;
     updateText();
 }
 
-QString LoadingDialogItem::currentDots() const
+QString LoadingItem::currentDots() const
 {
     QString res;
     for(int i = 0; i < _dots%3 + 1; ++i){
@@ -137,7 +137,7 @@ QString LoadingDialogItem::currentDots() const
     return res;
 }
 
-QString LoadingDialogItem::labelStylesheet(bool enable) const
+QString LoadingItem::labelStylesheet(bool enable) const
 {
     if(enable)
         return "font-weight: bold; color: black";
@@ -145,7 +145,7 @@ QString LoadingDialogItem::labelStylesheet(bool enable) const
         return "font-weight: normal; color: gray";
 }
 
-void LoadingDialogItem::on_pushButtonSkip_clicked()
+void LoadingItem::on_pushButtonSkip_clicked()
 {
     ui->pushButtonSkip->setText(QString::fromUtf8("Не выполнять"));
     ui->pushButtonSkip->setEnabled(false);

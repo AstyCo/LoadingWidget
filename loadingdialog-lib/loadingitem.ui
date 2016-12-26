@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LoadingDialogItem</class>
- <widget class="QWidget" name="LoadingDialogItem">
+ <class>LoadingItem</class>
+ <widget class="QWidget" name="LoadingItem">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -33,7 +33,7 @@ public:
             _future = QtConcurrent::run(_pInstance,_pFuncCancel);
         }
         else{
-            qWarning("HTaskCancealer:: Instance or Function pointer is NULL");
+            qWarning("HTaskBreaker:: Instance or Function pointer is NULL");
             return;
         }
     }
@@ -75,7 +75,7 @@ public:
             _future = QtConcurrent::run(_pInstance,_pFuncCancel,_arg1);
         }
         else{
-            qWarning("HTaskCancealer:: Instance or Function pointer is NULL");
+            qWarning("HTaskBreaker:: Instance or Function pointer is NULL");
             return;
         }
     }
@@ -119,7 +119,7 @@ public:
             _future = QtConcurrent::run(_pInstance,_pFuncCancel,_arg1,_arg2);
         }
         else{
-            qWarning("HTaskCancealer:: Instance or Function pointer is NULL");
+            qWarning("HTaskBreaker:: Instance or Function pointer is NULL");
             return;
         }
     }
@@ -168,7 +168,7 @@ public:
             _future = QtConcurrent::run(_pInstance,_pFuncCancel,_arg1,_arg2,_arg3);
         }
         else{
-            qWarning("HTaskCancealer:: Instance or Function pointer is NULL");
+            qWarning("HTaskBreaker:: Instance or Function pointer is NULL");
             return;
         }
     }
@@ -220,7 +220,7 @@ public:
             _future = QtConcurrent::run(_pInstance,_pFuncCancel,_arg1,_arg2,_arg3,_arg4);
         }
         else{
-            qWarning("HTaskCancealer:: Instance or Function pointer is NULL");
+            qWarning("HTaskBreaker:: Instance or Function pointer is NULL");
             return;
         }
     }
@@ -275,7 +275,7 @@ public:
             _future = QtConcurrent::run(_pInstance,_pFuncCancel,_arg1,_arg2,_arg3,_arg4,_arg5);
         }
         else{
-            qWarning("HTaskCancealer:: Instance or Function pointer is NULL");
+            qWarning("HTaskBreaker:: Instance or Function pointer is NULL");
             return;
         }
     }

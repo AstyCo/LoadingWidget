@@ -17,31 +17,28 @@ DESTDIR = $$OUT_PWD/../bin
 
 SOURCES += \
     loadingdialog.cpp \
-    loadingdialogsingleton.cpp \
     waitingspinnerwidget.cpp \
     htask.cpp \
     abstracthtaskcaller.cpp \
     htaskmanager.cpp \
-    loadingdialogitem.cpp \
     multitaskloadingwidget.cpp \
-    abstracthtaskbreaker.cpp
+    abstracthtaskbreaker.cpp \
+    loadingitem.cpp
 
 HEADERS += \
     loadingdialog.h \
-    loadingdialogsingleton.h \
     waitingspinnerwidget.h \
     loadingdialog_global.h \
     htask.h \
     abstracthtaskcaller.h \
     htaskcaller.h \
     htaskmanager.h \
-    loadingdialogitem.h \
     htaskextension.h \
     multitaskloadingwidget.h \
     htaskbreaker.h \
     abstracthtaskbreaker.h \
-    runandwaitsingleton.h \
-    runandwait.h
+    runandwait.h \
+    loadingitem.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -49,8 +46,8 @@ unix {
 
 FORMS += \
     loadingdialog.ui \
-    loadingdialogitem.ui \
-    multitaskloadingwidget.ui
+    multitaskloadingwidget.ui \
+    loadingitem.ui
 
 DISTFILES +=
 

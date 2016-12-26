@@ -78,7 +78,7 @@ void MultiTaskLoadingWidget::initManager()
 
 void MultiTaskLoadingWidget::addTask(HTask *task)
 {
-    LoadingDialogItem *item = new LoadingDialogItem();
+    LoadingItem *item = new LoadingItem();
     ui->verticalLayoutLoadingItems->addWidget(item);
     item->setProcessName(task->title());
     if(task->cancelable()){

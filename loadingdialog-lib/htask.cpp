@@ -53,7 +53,7 @@ void HTask::cancel(){
     }
     else
     {
-        qWarning("HTask:: Trying to Cancel task without instance of HTaskCancealer");
+        qWarning("HTask:: Trying to Cancel task without instance of HTaskBreaker");
         return;
     }
 }

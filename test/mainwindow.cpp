@@ -61,8 +61,7 @@ void MainWindow::on_pushButton_2_clicked()
             myClass6,
             myClass7,
             myClass8,
-            myClass9
-            ;
+            myClass9;
     HTaskManager manager(
                 this,
                 QString::fromUtf8("Тестовая установка"),

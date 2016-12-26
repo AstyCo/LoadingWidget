@@ -4,7 +4,7 @@
 #include "loadingdialog_global.h"
 #include "htaskmanager.h"
 #include "htask.h"
-#include "loadingdialogitem.h"
+#include "loadingitem.h"
 
 #include <QPointer>
 #include <QHash>
@@ -54,7 +54,7 @@ private:
 private:
     Ui::MultiTaskLoadingWidget *ui;
     QPointer<HTaskManager> _manager;
-    QHash<HTask *, LoadingDialogItem *> _qhashTasks;
+    QHash<HTask *, LoadingItem *> _qhashTasks;
 };
 
 #endif // MULTITASKLOADINGWIDGET_H
